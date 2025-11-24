@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	configPath string = "configs/.env"
+	configPath string = "config/.env"
 )
 
 type Config struct {
@@ -26,7 +26,7 @@ func LoadConfig() Config {
 	err := godotenv.Load(configPath)
 
 	if err != nil {
-		messages.SendLogMessage(logrus.ErrorLevel, "File .env was not found", err)
+		messages.SendLogMessage(logrus.ErrorLevel, "File .env was not found ", err)
 	}
 	return Config{
 		DBHost:     getEnv("DB_HOST", "localhost"),

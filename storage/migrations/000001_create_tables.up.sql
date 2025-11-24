@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_id VARCHAR PRIMARY KEY,
     username VARCHAR NOT NULL,
     team_name VARCHAR REFERENCES teams(team_name) ON DELETE SET NULL,
-    is_active BOOLEAN ,
+    is_active BOOLEAN 
 );
 
 -- PR Table
@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS pull_requests (
 CREATE TABLE IF NOT EXISTS pr_reviewers (
     pull_request_id VARCHAR NOT NULL REFERENCES pull_requests(pull_request_id) ON DELETE CASCADE,
     reviewer_id VARCHAR NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (pull_request_id, reviewer_id)
 );
 
