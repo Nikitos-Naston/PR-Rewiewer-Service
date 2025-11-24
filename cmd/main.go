@@ -7,6 +7,7 @@ import (
 	"PRreviewService/internal/repository"
 	"PRreviewService/storage"
 	"net/http"
+	"time"
 
 	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
@@ -21,7 +22,13 @@ func main() {
 		messages.SendLogMessage(logrus.ErrorLevel, "DataBase connection unsuccesfull", err)
 		return
 	}
-
+	time.Sleep(5 * time.Second)
+	err = initDB(db)
+	if err != nil {
+		messages.SendLogMessage(logrus.ErrorLevel, "DataBase init unsuccesfull", err)
+		return
+	}
+	messages.SendLogMessage(logrus.ErrorLevel, "DataBase init succes", nil)
 	defer db.Close()
 	messages.SendLogMessage(logrus.InfoLevel, "Connected to DataBase succesfull", nil)
 
