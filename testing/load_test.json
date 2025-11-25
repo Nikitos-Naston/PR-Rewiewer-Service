@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "b4c8a9d1-1234-5678-9abc-def012345678",
+		"name": "Go Backend Load Test",
+		"description": "Коллекция для нагрузочного тестирования сервиса PR Reviewer. Включает чтение команд и создание PR с динамическими данными.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Team (Read)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const teamId = _.random(1, 20);",
+							"pm.variables.set(\"team_name\", `Team_${teamId}`);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is < 300ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/team/get?team_name={{team_name}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"team",
+						"get"
+					],
+					"query": [
+						{
+							"key": "team_name",
+							"value": "{{team_name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create PR (Write)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const uniqueId = Date.now() + \"_\" + _.random(1, 10000);",
+							"pm.variables.set(\"pr_id\", `pr_load_${uniqueId}`);",
+							"",
+							"let userId = _.random(1, 200);",
+							"",
+							"if (userId % 10 === 0) {",
+							"    userId -= 1;",
+							"}",
+							"pm.variables.set(\"author_id\", `user_${userId}`);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 or 201\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"pm.test(\"Response time is < 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"pull_request_id\": \"{{pr_id}}\",\n  \"pull_request_name\": \"Load Test PR {{pr_id}}\",\n  \"author_id\": \"{{author_id}}\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8085/pullRequest/create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"pullRequest",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

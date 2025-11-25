@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "4bc7be1b-9394-46ad-875d-5bb1e303a2c9",
+		"name": "PR_Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39340841"
+	},
+	"item": [
+		{
+			"name": "CheckStatus",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"haha@lox\",\r\n    \"password\" : \"1234\",\r\n    \"role\" : \"student\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddNewTeam",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"team_name\": \"backend\",\r\n  \"members\": [\r\n    {\"user_id\": \"u1\", \"username\": \"Alice\", \"is_active\": true},\r\n    {\"user_id\": \"u2\", \"username\": \"Bob\", \"is_active\": true},\r\n    {\"user_id\": \"u3\", \"username\": \"Charlie\", \"is_active\": true},\r\n    {\"user_id\": \"u4\", \"username\": \"Dave\", \"is_active\": true}\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/team/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"team",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddExistTeam",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"team_name\": \"backend\",\r\n  \"members\": [\r\n    {\"user_id\": \"u1\", \"username\": \"Alice\", \"is_active\": true},\r\n    {\"user_id\": \"u2\", \"username\": \"Bob\", \"is_active\": true},\r\n    {\"user_id\": \"u3\", \"username\": \"Charlie\", \"is_active\": true},\r\n    {\"user_id\": \"u4\", \"username\": \"Dave\", \"is_active\": true}\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/team/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"team",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTeam",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"team_name\": \"backend\",\r\n    \"members\": [\r\n        {\"user_id\": \"u1\", \"username\": \"Alice\", \"is_active\": true},\r\n        {\"user_id\": \"u2\", \"username\": \"Bob\", \"is_active\": true},\r\n        {\"user_id\": \"u3\", \"username\": \"Charlie\", \"is_active\": true}\r\n    ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/team/get?team_name=backend",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"team",
+						"get"
+					],
+					"query": [
+						{
+							"key": "team_name",
+							"value": "backend"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePR",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pull_request_id\": \"pr-100\",\r\n  \"pull_request_name\": \"Add search\",\r\n  \"author_id\": \"u1\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/pullRequest/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pullRequest",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateDuplicate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pull_request_id\": \"pr-100\",\r\n  \"pull_request_name\": \"Add search\",\r\n  \"author_id\": \"u1\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/pullRequest/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pullRequest",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeactivateUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\": \"u2\",\r\n    \"is_active\": false\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/setIsActive",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"setIsActive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ressign",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pull_request_id\": \"12\",\r\n    \"old_user_id\": \"u2\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/pullRequest/reassign",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pullRequest",
+						"reassign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Merge",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"pull_request_id\": \"pr-100\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/pullRequest/merge",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pullRequest",
+						"merge"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetREwiew",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/getReview?user_id=u2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"getReview"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "u2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reogranizeTeams",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"team_name\": \"frontend\",\r\n  \"members\": [\r\n    {\"user_id\": \"u5\", \"username\": \"Alicedd\", \"is_active\": true},\r\n    {\"user_id\": \"u2\", \"username\": \"Bob\", \"is_active\": true}\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/team/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"team",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStats",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"haha@lox\",\r\n    \"password\" : \"1234\",\r\n    \"role\" : \"student\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stats"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
