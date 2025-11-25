@@ -27,8 +27,9 @@ func main() {
 	userRepo := repository.NewUserRepository(db)
 	teamRepo := repository.NewTeamRepository(db)
 	prRepo := repository.NewPRRepository(db)
+	statRepo := repository.NewStatRepository(db)
 
-	h := handlers.NewHandler(teamRepo, userRepo, prRepo)
+	h := handlers.NewHandler(teamRepo, userRepo, prRepo, statRepo)
 
 	mux := http.NewServeMux()
 
@@ -40,6 +41,7 @@ func main() {
 	mux.HandleFunc("POST /pullRequest/merge", h.MergePR)
 	mux.HandleFunc("POST /pullRequest/reassign", h.RessignRewiewer)
 	mux.HandleFunc("GET /status", h.Status)
+	mux.HandleFunc("GET /stats", h.ShowStat)
 
 	server := &http.Server{
 		Addr:    ":" + cfg.Port,

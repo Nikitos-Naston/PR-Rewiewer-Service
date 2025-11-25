@@ -16,4 +16,9 @@ br:
 	go build -v ./cmd/
 	./cmd.exe
 
+fullbr:
+	migrate -path storage/migrations -database "postgres://localhost:5432/ReviewService?sslmode=disable&user=postgres&password=2909" down
+	migrate -path storage/migrations -database "postgres://localhost:5432/ReviewService?sslmode=disable&user=postgres&password=2909" up
+	go build -v ./cmd/
+	./cmd.exe
 .DEFAULT_GOAL := build

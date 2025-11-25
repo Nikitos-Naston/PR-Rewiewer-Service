@@ -5,7 +5,6 @@ import (
 	"PRreviewService/internal/messages"
 	"PRreviewService/internal/models"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"slices"
 )
@@ -66,7 +65,6 @@ func (H *Handler) CreatePR(writer http.ResponseWriter, req *http.Request) {
 		messages.SendMessageJSON(writer, "SERVER_ERROR")
 		return
 	}
-	fmt.Println(exist, PR, PR.Name, PR.ID)
 	if exist {
 		messages.SendLogMessage("Operation ends by user error PR_EXISTS 409", nil)
 		messages.SendMessageJSON(writer, "PR_EXISTS")
@@ -141,6 +139,14 @@ func (H *Handler) MergePR(writer http.ResponseWriter, req *http.Request) {
 		messages.SendMessageJSON(writer, "SERVER_ERROR")
 		return
 	}
+
+	PR, err = H.PRRepo.GetPRByID(PR.ID)
+	if err != nil {
+		messages.SendLogMessage("problem with  DB while GetPRbyID operation", err)
+		messages.SendMessageJSON(writer, "SERVER_ERROR")
+		return
+	}
+
 	if PR.Status == "OPEN" {
 		err = H.PRRepo.MERGEPR(PR.ID)
 		if err != nil {
@@ -148,12 +154,6 @@ func (H *Handler) MergePR(writer http.ResponseWriter, req *http.Request) {
 			messages.SendMessageJSON(writer, "SERVER_ERROR")
 			return
 		}
-	}
-	PR, err = H.PRRepo.GetPRByID(PR.ID)
-	if err != nil {
-		messages.SendLogMessage("problem with  DB while GetPRbyID operation", err)
-		messages.SendMessageJSON(writer, "SERVER_ERROR")
-		return
 	}
 	for _, id := range PR.AssignedReviewers {
 		err = H.PRRepo.CreatePRRewie(PR.ID, id)

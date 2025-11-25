@@ -11,13 +11,15 @@ type Handler struct {
 	TeamRepo *repository.TeamRepository
 	UserRepo *repository.UserRepository
 	PRRepo   *repository.PRRepository
+	StatRepo *repository.StatRepository
 }
 
-func NewHandler(TeamRepo *repository.TeamRepository, UserRepo *repository.UserRepository, PRRepo *repository.PRRepository) *Handler {
+func NewHandler(TeamRepo *repository.TeamRepository, UserRepo *repository.UserRepository, PRRepo *repository.PRRepository, StatRepo *repository.StatRepository) *Handler {
 	return &Handler{
 		TeamRepo: TeamRepo,
 		UserRepo: UserRepo,
 		PRRepo:   PRRepo,
+		StatRepo: StatRepo,
 	}
 }
 

@@ -40,3 +40,19 @@ type AnswerbyReassignRequest struct {
 	PR    *PR    `json:"pull_request"`
 	NewId string `json:"replaced_by"`
 }
+
+type GeneralStats struct {
+	TotalOpen   int `json:"total_open"`
+	TotalMerged int `json:"total_merged"`
+}
+
+type UserWorkload struct {
+	UserName        string `json:"user_name"`
+	CreatedTotal    int    `json:"created_total"`
+	AssignedPending int    `json:"assigned_pending"`
+}
+
+type StatsResponnse struct {
+	GlobalStat GeneralStats    `json:"Global_stats"`
+	UserStat   []*UserWorkload `json:"User_stats"`
+}
