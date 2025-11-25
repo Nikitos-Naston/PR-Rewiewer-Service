@@ -5,14 +5,12 @@ import (
 	"PRreviewService/internal/messages"
 	"database/sql"
 	"fmt"
-
-	"github.com/sirupsen/logrus"
 )
 
 func New(cfg config.Config) (*sql.DB, error) {
 	InfoDB := fmt.Sprintf("host = %s port = %s user = %s password = %s dbname = %s sslmode = disable",
 		cfg.DBHost, cfg.DBPort, cfg.DBUser, cfg.DBPassword, cfg.DBName)
-	messages.SendLogMessage(logrus.InfoLevel, InfoDB, nil)
+	messages.SendLogMessage(InfoDB, nil)
 
 	db, err := sql.Open("postgres", InfoDB)
 	if err != nil {

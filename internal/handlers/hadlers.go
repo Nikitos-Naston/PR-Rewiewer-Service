@@ -3,9 +3,8 @@ package handlers
 import (
 	"PRreviewService/internal/messages"
 	"PRreviewService/internal/repository"
+	"encoding/json"
 	"net/http"
-
-	"github.com/sirupsen/logrus"
 )
 
 type Handler struct {
@@ -28,6 +27,7 @@ func initHeaders(writer http.ResponseWriter) {
 
 func (H *Handler) Status(writer http.ResponseWriter, req *http.Request) {
 	initHeaders(writer)
-	messages.SendLogMessage(logrus.InfoLevel, "Check api helth", nil)
-	messages.SendMessageJSON(writer, 200, "Health")
+	messages.SendLogMessage("Check api helth", nil)
+	writer.WriteHeader(200)
+	json.NewEncoder(writer).Encode("Healthy")
 }

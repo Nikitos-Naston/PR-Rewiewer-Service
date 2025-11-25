@@ -21,11 +21,11 @@ type PR struct {
 	Status            string     `json:"status"`
 	AssignedReviewers []string   `json:"assigned_reviewers"`
 	CreatedAt         time.Time  `json:"createdAt,omitempty"`
-	MergedAt          *time.Time `json:"merjedAt,omitempty"`
+	MergedAt          *time.Time `json:"mergedAt,omitempty"`
 }
 
 type PRsmall struct {
-	ID       string `json:"pull_reauest_id"`
+	ID       string `json:"pull_request_id"`
 	Name     string `json:"pull_request_name"`
 	AuthorID string `json:"author_id"`
 	Status   string `json:"status"`

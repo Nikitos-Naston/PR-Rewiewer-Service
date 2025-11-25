@@ -12,4 +12,8 @@ down:
 run:
 	./cmd.exe
 
+br:
+	go build -v ./cmd/
+	./cmd.exe
+
 .DEFAULT_GOAL := build

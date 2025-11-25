@@ -5,8 +5,6 @@ import (
 	"PRreviewService/internal/models"
 	"database/sql"
 	"fmt"
-
-	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -23,7 +21,7 @@ func NewUserRepository(db *sql.DB) *UserRepository {
 
 func (ur *UserRepository) CreateUser(u *models.User) error {
 	query := fmt.Sprintf("INSERT INTO %s(user_id, username,  team_name, is_active) VALUES($1, $2, $3, $4)", tableUser)
-	if _, err := ur.db.Query(query, u.UserID, u.UserName, u.TeamName, u.IsActive); err != nil {
+	if _, err := ur.db.Exec(query, u.UserID, u.UserName, u.TeamName, u.IsActive); err != nil {
 		return err
 
 	}
@@ -53,7 +51,7 @@ func (ur *UserRepository) GetActiveByTeam(teamName string) ([]*models.User, erro
 		u := models.User{}
 		err := rows.Scan(&u.UserID, &u.UserName, &u.TeamName, &u.IsActive)
 		if err != nil {
-			messages.SendLogMessage(logrus.ErrorLevel, "Cant parse user", err)
+			messages.SendLogMessage("Cant parse user", err)
 		}
 		users = append(users, &u)
 	}
@@ -73,7 +71,7 @@ func (ur *UserRepository) GetAllByTeam(teamName string) ([]models.User, error) {
 		u := models.User{}
 		err := rows.Scan(&u.UserID, &u.UserName, &u.TeamName, &u.IsActive)
 		if err != nil {
-			messages.SendLogMessage(logrus.ErrorLevel, "Cant parse user", err)
+			messages.SendLogMessage("Cant parse user", err)
 		}
 		users = append(users, u)
 	}
@@ -107,7 +105,7 @@ func (ur *UserRepository) UserExist(userID string) (bool, error) {
 
 func (ur *UserRepository) UpdateUserTeam(userID string, teamName string) error {
 	query := fmt.Sprintf("UPDATE %s SET team_name = $1 WHERE user_id = $2", tableUser)
-	if _, err := ur.db.Query(query, teamName, userID); err != nil {
+	if _, err := ur.db.Exec(query, teamName, userID); err != nil {
 		return err
 
 	}

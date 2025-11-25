@@ -5,8 +5,6 @@ import (
 	"PRreviewService/internal/models"
 	"database/sql"
 	"fmt"
-
-	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -24,7 +22,7 @@ func NewPRRepository(db *sql.DB) *PRRepository {
 
 func (prr *PRRepository) CreatePR(pullRequest models.PR) (*models.PR, error) {
 	query := fmt.Sprintf("INSERT INTO %s (pull_request_id, pull_request_name, author_id, status, created_at) VALUES ($1, $2, $3, 'OPEN', CURRENT_TIMESTAMP)", tablePR)
-	if _, err := prr.db.Query(query, pullRequest.ID, pullRequest.Name, pullRequest.AuthorID); err != nil {
+	if _, err := prr.db.Exec(query, pullRequest.ID, pullRequest.Name, pullRequest.AuthorID); err != nil {
 		return nil, err
 
 	}
@@ -54,7 +52,7 @@ func (prr *PRRepository) GetReviewers(pullRequestID string) ([]string, error) {
 		var rewiewerID string
 		err := rows.Scan(&rewiewerID)
 		if err != nil {
-			messages.SendLogMessage(logrus.ErrorLevel, "Cant parse rewiewr", err)
+			messages.SendLogMessage("Cant parse rewiewr", err)
 		}
 		reviewers = append(reviewers, rewiewerID)
 	}
@@ -63,7 +61,7 @@ func (prr *PRRepository) GetReviewers(pullRequestID string) ([]string, error) {
 
 func (prr *PRRepository) CreatePRRewie(pullRequestID string, reviewerID string) error {
 	query := fmt.Sprintf("INSERT INTO %s (pull_request_id, reviewer_id) VALUES ($1, $2)", tablePRreviewer)
-	if _, err := prr.db.Query(query, pullRequestID, reviewerID); err != nil {
+	if _, err := prr.db.Exec(query, pullRequestID, reviewerID); err != nil {
 		return err
 
 	}
@@ -72,7 +70,7 @@ func (prr *PRRepository) CreatePRRewie(pullRequestID string, reviewerID string) 
 
 func (prr *PRRepository) DeletePR(pullRequestID string, reviewerID string) error {
 	query := fmt.Sprintf("DELETE FROM %s WHERE pull_request_id = $1 AND reviewer_id = $2", tablePRreviewer)
-	if _, err := prr.db.Query(query, pullRequestID, reviewerID); err != nil {
+	if _, err := prr.db.Exec(query, pullRequestID, reviewerID); err != nil {
 		return err
 
 	}
@@ -81,7 +79,7 @@ func (prr *PRRepository) DeletePR(pullRequestID string, reviewerID string) error
 
 func (prr *PRRepository) MERGEPR(pullRequestID string) error {
 	query := fmt.Sprintf("UPDATE %s SET status = 'MERGED', merged_at = CURRENT_TIMESTAMP WHERE pull_request_id = $1", tablePR)
-	if _, err := prr.db.Query(query, pullRequestID); err != nil {
+	if _, err := prr.db.Exec(query, pullRequestID); err != nil {
 		return err
 
 	}
@@ -129,7 +127,7 @@ func (prr *PRRepository) GetRRByUserID(UserID string) ([]string, error) {
 		var requstID string
 		err := rows.Scan(&requstID)
 		if err != nil {
-			messages.SendLogMessage(logrus.ErrorLevel, "Cant parse rewiewr", err)
+			messages.SendLogMessage("Cant parse rewiewr", err)
 		}
 		requests = append(requests, requstID)
 	}

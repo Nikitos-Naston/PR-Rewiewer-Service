@@ -20,7 +20,7 @@ func NewTeamRepository(db *sql.DB) *TeamRepository {
 
 func (tr *TeamRepository) CreateTeam(teamName string) error {
 	query := fmt.Sprintf("INSERT INTO %s(team_name) VALUES($1)", tableTeam)
-	if _, err := tr.db.Query(query, teamName); err != nil {
+	if _, err := tr.db.Exec(query, teamName); err != nil {
 		return err
 
 	}
