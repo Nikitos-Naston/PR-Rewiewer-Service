@@ -113,7 +113,8 @@ make buildrun
 Также было проведено нагрузочное тестирование его результат на картинке, сервер вполне справляется с емкими запросами(по моему мнению)
 Получение команды и создание PR с последующем назначением. 
 
-![Изображение](https://drive.google.com/file/d/1oArP3gFopehf3gaNmNIA3IhSQwD2RoXq/view?usp=sharing)
+<img width="1353" height="707" alt="load_test_result" src="https://github.com/user-attachments/assets/82b0af0e-1cb6-4453-a6c4-97a0bb54cee0" />
+
 
 Для удобства тестирования, в папку testing были добавлены 3 JSON структры которые можно загрузить в POSTMAN и протестировать
 
